@@ -73,23 +73,35 @@ class blockchain:#Creacion de la clase blockchain
        
         
        
-        #Comentar y compender lo de abajo:
-       
+        
+       #Funcion poara verificar si una cadena es válida, recibe el 1er parámetro chain que representa la cadena de bloque
         def is_chain_valid(self,chain):
+            #Inicia desde el bloque principal y se lo guarda en la variable previous_block
             previous_block = chain[0]
+            #Contador para recorrer la cadeba de bloques, arranca desde el block 2
             block_index = 1
+            #Bucle while para el recorrido de la de la cadena, mientras el recorrido por cada bloque sea MENOR al tamaño de la cadena.... seguir recorriendo
             while block_index < len(chain):
+                #Crear una variable llamada block para guardar el bloque actual de cada iteracion que se haga
                 block = chain[block_index]
-                if block['previous_hash'] != self.hash(previous_block):
-                    return False
+                #Comprobación de si el bloque actúal tiene el previous_hash igual que el del bloque anterior
+                if block['previous_hash'] != self.hash(previous_block):#SI el previous hash del block actual NO ES IGUAL al hash de su bloque anterior...
+                    return False#Retornar falso
+                #Obtiene la prueba de trab del bloque anterior:
                 previuos_proof = previous_block['proof']
-                proof = block['proof']
-                hash_operation = hashlib.sha256(str(new_proof**2 - previuos_proof**2).encode)
+                #Obtiene la prueba de trabajo del bloque actual:
+                proof_actual = block['proof']
+                #Cálculo del hash en base a los proofs anteriores(actual y viejo):
+                hash_operation = hashlib.sha256(str(proof_actual**2 - previuos_proof**2).encode()
+                #Comprueba si el hash generado cumple con la regla de los 4 ceros al inicio de él
                 if hash_operation[:4] != '0000':
+                    #SI pasa esto, da falso
                     return False
-                
+                #Se actualiza para ser el bloque actual
                 previous_block = block
+                #Se incremmeta de a 1 para pasar al sig bloque
                 block_index +=1
+            #Si se recorren todos los blocks y no hay prob de intergidad y de proof... retorna true
             return True
             
        
@@ -98,4 +110,11 @@ class blockchain:#Creacion de la clase blockchain
         '''----------------------------------------------2da Parte----------------------------------------------------------------------'''
         
 
-    
+    #WEB APP:
+        
+        app = flask(__name__)
+        blockchain = Blockchain()
+        
+        
+    #Minando un nuevo bloque
+        
