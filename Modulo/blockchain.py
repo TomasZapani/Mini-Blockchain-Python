@@ -65,12 +65,37 @@ class blockchain:#Creacion de la clase blockchain
        #Creaciòn de la funcion hash para verificar que el previous hash de cada bloque es igual que el del anterior, tiene un paràmetro llamado block que funciona como input
        def hash(self,block):
            
-           #Conv el bloque en una cadena JSON y dps la codifica a bytes para que pueda ser pasa a hash
+           #Conv el bloque en una cadena JSON y dps la codifica a bytes para que pueda ser pasa a hash. El sort keys es para colocarlo de forma alfabéticamente
            encoded_block = json.dumps(block,sort_keys =  True).encoded()
            
            #Càlcula el hash sha-256 para que pueda ser pasado en formato de bytes y lo conv en una cadena hexadecimal
            return hashlib.sha256(encoded_block()).hexdigest()
        
         
-       #Push
+       
+        #Comentar y compender lo de abajo:
+       
+        def is_chain_valid(self,chain):
+            previous_block = chain[0]
+            block_index = 1
+            while block_index < len(chain):
+                block = chain[block_index]
+                if block['previous_hash'] != self.hash(previous_block):
+                    return False
+                previuos_proof = previous_block['proof']
+                proof = block['proof']
+                hash_operation = hashlib.sha256(str(new_proof**2 - previuos_proof**2).encode)
+                if hash_operation[:4] != '0000':
+                    return False
+                
+                previous_block = block
+                block_index +=1
+            return True
+            
+       
+        
+       
+        '''----------------------------------------------2da Parte----------------------------------------------------------------------'''
+        
+
     
